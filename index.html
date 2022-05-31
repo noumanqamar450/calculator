@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+
+    <style>
+        @font-face {
+            font-family: digital;
+            src: url('./digital-7.ttf');
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .cal {
+            width: 400px;
+            min-height: 200px;
+            padding: 20px;
+            background: #7d003e;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgb(0, 0, 0, 25%), inset 5px -5px 10px rgb(0, 0, 0, 80%);
+            margin-top: 50px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cal input[type="text"] {
+            background: #fff;
+            padding: 10px 15px;
+            font-size: 40px;
+            width: 100%;
+            border-radius: 10px;
+            border: none;
+            box-shadow: inset 0px 0px 5px rgb(0, 0, 0, 80%);
+            font-family: digital;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        
+        .cal input[type="button"] {
+            width: 21%;
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            box-shadow: inset 2px -2px 5px rgb(0, 0, 0, 75%);
+        }
+        
+        .cal .opr {
+            background: goldenrod;
+            color: #fff;
+        }
+        
+        .cal .eql {
+            background: gray;
+            color: #fff;
+        }
+        
+        .cal input[type="button"]:hover {
+            opacity: 0.9;
+        }
+        
+        .cal .clr {
+            background: red;
+            color: #fff;
+        }
+        .footer {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cal">
+        <input type="text" name="" id="calculation" placeholder="0" disabled>
+        <input type="button" value="7" onclick="calculator(event)">
+        <input type="button" value="8" onclick="calculator(event)">
+        <input type="button" value="9" onclick="calculator(event)">
+        <input type="button" value="/" onclick="calculator(event)" class="opr">
+        <input type="button" value="4" onclick="calculator(event)">
+        <input type="button" value="5" onclick="calculator(event)">
+        <input type="button" value="6" onclick="calculator(event)">
+        <input type="button" value="*" onclick="calculator(event)" class="opr">
+        <input type="button" value="1" onclick="calculator(event)">
+        <input type="button" value="2" onclick="calculator(event)">
+        <input type="button" value="3" onclick="calculator(event)">
+        <input type="button" value="+" onclick="calculator(event)" class="opr">
+        <input type="button" value="0" onclick="calculator(event)">
+        <input type="button" value="." onclick="calculator(event)">
+        <input type="button" value="-" onclick="calculator(event)" class="opr">
+        <input type="button" value="=" onclick="calculator(event)" class="eql">
+        <input type="button" value="C" onclick="clr()" class="clr">
+    </div>
+    <div class="footer">
+        <p>Design & Develop 💗 By: Nouman Qamar</p>
+    </div>
+
+</body>
+<script>
+    let output = document.getElementById('calculation');
+    let operation = '';
+    let frtvalue = 0;
+    let dot = false;
+    let flag = true;
+
+    function
+    calculator(e) {
+        if (output.value.length <= 12) {
+            if (e.target.value == '/' || e.target.value == '*' || e.target.value == '-' || e.target.value == '+' || e.target.value == '=') {
+                if (operation == '') {
+                    frtvalue = Number(output.value);
+                    operation = e.target.value;
+                    dot = false;
+                    return;
+                }
+
+                switch (operation) {
+                    case '+':
+                        frtvalue = Number(frtvalue) + Number(output.value);
+                        operation = e.target.value;
+                        flag = true;
+                        dot = false;
+                        break;
+                    case '-':
+                        frtvalue = Number(frtvalue) - Number(output.value);
+                        operation = e.target.value;
+                        flag = true;
+                        dot = false;
+                        break;
+                    case '/':
+                        frtvalue = Number(frtvalue) / Number(output.value);
+                        operation = e.target.value;
+                        flag = true;
+                        dot = false;
+                        break;
+                    case '*':
+                        frtvalue = Number(frtvalue) * Number(output.value);
+                        operation = e.target.value;
+                        flag = true;
+                        dot = false;
+                        break;
+                    default:
+                        break;
+                }
+
+                if (operation == '=') {
+                    output.value = frtvalue;
+                    flag = true;
+                    frtvalue = 0;
+                    operation = '';
+                    return;
+                }
+
+
+            } else {
+                if (output.value == '') {
+                    output.value = e.target.value;
+                } else if (operation != '' && flag) {
+                    output.value = e.target.value;
+                    flag = false;
+                } else if (e.target.value == '.' && !dot) {
+                    output.value = output.value + e.target.value;
+                    dot = true;
+                } else if (e.target.value == '.' && dot) {
+                    return;
+                } else {
+                    output.value = output.value + e.target.value;
+                }
+            }
+        } else {
+            alert('Maximum 12 digits allowed.');
+        }
+    }
+
+    function clr() {
+        document.getElementById('calculation').value = '';
+    }
+</script>
+
+</html>
